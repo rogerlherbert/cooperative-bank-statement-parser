@@ -47,7 +47,10 @@ class Statement
 			$csv .= $tx->date->format('d-m-Y') . "," . $tx->description . ",,," . $inout . "\n";
 		}
 
-		header('Content-Type: text/csv; charset=utf-8'); 
+		header('Content-Type: application/csv');
+		header('Content-Disposition: attachment; filename=statement-'.time().'.csv');
+		header('Pragma: no-cache');
+
 		echo $csv;
 	}
 }
