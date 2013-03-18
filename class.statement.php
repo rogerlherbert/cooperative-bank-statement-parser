@@ -6,7 +6,7 @@ class Statement
 {
 	private $list = array();
 	
-	public function load($html)
+	public function load($type, $html)
 	{
 		$doc = new DOMDocument();
 
@@ -20,7 +20,9 @@ class Statement
 
 		$finder = new DomXPath($doc);
 
-		$rows = $finder->query("tr", $tables->item(2));
+		$table_item = ($type == 'current') ? 2 : 3;
+
+		$rows = $finder->query("tr", $tables->item($table_item));
 
 		foreach ($rows as $row) 
 		{
