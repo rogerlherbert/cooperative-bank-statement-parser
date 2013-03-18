@@ -14,13 +14,13 @@ class Statement
 
 		$doc->loadHTML($html);
 
-		$tables = $doc->getElementsByTagName('table');
+		$tables = $doc->getElementsByTagName('tbody');
 
 		if ($tables->length === 0) { throw new Exception('Couldn\'t find anything useful in your HTML, sorry.'); }
 
 		$finder = new DomXPath($doc);
 
-		$rows = $finder->query("tbody/tr", $tables->item(12));
+		$rows = $finder->query("tr", $tables->item(2));
 
 		foreach ($rows as $row) 
 		{
