@@ -16,7 +16,7 @@ class Statement
 
 		$tables = $doc->getElementsByTagName('table');
 
-		if ($tables->length === 0) { throw new Exception('Couldn\'t find anything useful in your HMTL, sorry.'); }
+		if ($tables->length === 0) { throw new Exception('Couldn\'t find anything useful in your HTML, sorry.'); }
 
 		$finder = new DomXPath($doc);
 
