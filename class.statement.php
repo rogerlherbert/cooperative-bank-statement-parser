@@ -30,7 +30,10 @@ class Statement
 
 			$tx->load($row);
 
-			$this->push($tx);
+			if ($tx->change != '') 
+			{
+				$this->push($tx);
+			}
 		}
 	}
 	
@@ -39,14 +42,30 @@ class Statement
 		$this->list[] = $tx;
 	}
 	
-	public function toCSV()
+	public function toCSV($service)
 	{
-		$csv = "Date,Payee,Category,Memo,Outflow,Inflow\n";
+		switch ($service) {
+			case 'ynab':
+				$csv = "Date,Payee,Category,Memo,Outflow,Inflow\n";
 
-		foreach ($this->list as $tx) 
-		{
-			$inout = (strpos($tx->change, '-') === FALSE) ? ',' . $tx->change : substr($tx->change, 1) . ',';
-			$csv .= $tx->date->format('d-m-Y') . "," . $tx->description . ",,," . $inout . "\n";
+				foreach ($this->list as $tx) 
+				{
+					$inout = (strpos($tx->change, '-') === FALSE) ? ',' . $tx->change : substr($tx->change, 1) . ',';
+					$csv .= $tx->date->format('d-m-Y') . "," . $tx->description . ",,," . $inout . "\n";
+				}
+				break;
+			
+			case 'freeagent':
+				$csv = '';
+
+				foreach ($this->list as $tx) 
+				{
+					$csv .= $tx->date->format('d/m/Y') . "," . $tx->change . "," . $tx->description . "\n";
+				}
+				
+			default:
+				# code...
+				break;
 		}
 
 		header('Content-Type: application/csv');
