@@ -46,7 +46,7 @@ class Transaction
 						break;
 					
 					case 'description':
-						$this->description = trim($td->nodeValue);
+						$this->description = str_replace(',', '', trim($td->nodeValue));
 						break;
 				
 					case 'in':
